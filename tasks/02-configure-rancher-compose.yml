@@ -1,0 +1,30 @@
+---
+
+- name: Verify rancher-compose exists
+  stat: path=/opt/rancher-compose/rancher-compose-linux-amd64-{{ rancher_compose_version }}.tar.gz
+  register: rancher_compose_stat
+
+- name: Unarchive rancher-compose
+  unarchive:
+    src: /opt/rancher-compose/rancher-compose-linux-amd64-{{ rancher_compose_version }}.tar.gz
+    dest: /opt/rancher-compose/
+    remote_src: yes
+
+- name: Configure rancher-compose on system bin.
+  file:
+    src: "/opt/rancher-compose/rancher-compose-{{ rancher_compose_version }}/rancher-compose"
+    dest: "/usr/bin/rancher-compose"
+    state: link
+  when: rancher_compose_stat.stat.exists
+
+- name: Configure rancher-compose on system sbin.
+  file:
+    src: "/opt/rancher-compose/rancher-compose-{{ rancher_compose_version }}/rancher-compose"
+    dest: "/usr/sbin/rancher-compose"
+    state: link
+  when: rancher_compose_stat.stat.exists
+
+- command: rancher-compose --version
+  register: result
+  failed_when: false
+  changed_when: false

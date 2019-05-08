@@ -1,0 +1,4 @@
+---
+# defaults file for rancher-compose
+
+rancher_compose_version: "v0.12.5"

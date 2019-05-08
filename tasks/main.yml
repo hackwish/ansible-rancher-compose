@@ -1,0 +1,8 @@
+---
+# tasks file for rancher-compose
+
+- include: 01-get-rancher-compose.yml
+  tags: rancher-compose-get
+
+- include: 02-configure-rancher-compose.yml
+  tags: rancher-compose-configure

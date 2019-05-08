@@ -1,0 +1,9 @@
+---
+- name: Create rancher-compose directory
+  file: path=/opt/rancher-compose/ state=directory mode="a+rw"
+
+- name: Get rancher-compose
+  get_url:
+    url: https://github.com/rancher/rancher-compose/releases/download/{{ rancher_compose_version }}/rancher-compose-linux-amd64-{{ rancher_compose_version }}.tar.gz
+    dest: "/opt/rancher-compose/"
+    mode: 0755
